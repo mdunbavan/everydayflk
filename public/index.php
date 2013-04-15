@@ -32,3 +32,12 @@ unset($web);
 // Launch Laravel.
 // --------------------------------------------------------------
 require path('sys').'laravel.php';
+
+if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false)
+{
+    $_SERVER['LARAVEL_ENV'] = 'local';
+}
+else
+{
+    $_SERVER['LARAVEL_ENV'] = 'production';
+}
