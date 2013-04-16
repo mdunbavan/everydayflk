@@ -2,10 +2,15 @@
 <br/>
 		@section('main')
 		<div role="main" class="main">
-			<div class="home">
-				<p>My home page</p>
+			<div class="about">
+				<p>About us</p>
+				<p>Our team is:</p>
+
+				<p>The team is</p>
+				
 			</div>
 		</div>
 		@endsection
+	
 </body>
 </html>

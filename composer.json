@@ -1,0 +1,7 @@
+{
+    "require": {
+        "php": ">=5.3.0",
+        "kloy/cli": "0.0.*",
+        "php-instagram-api/php-instagram-api": "dev-master"
+    }
+}

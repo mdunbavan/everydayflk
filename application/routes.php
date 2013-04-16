@@ -32,10 +32,48 @@
 |
 */
 
+/*
 Route::get('/', function()
 {
 	return View::make('home.index');
 });
+*/
+
+/*
+Route::get('about', function()
+{
+	
+	return View::make('home.about', array(
+		'items' => array('Steve','Leon','Fraser')
+	)
+	);
+	
+});
+*/
+
+/*
+Route::get('images', function()
+{
+	
+	return View::make('instagram.images', array(
+		'images' => array('Image 1','Image 2','Image 3')
+	)
+	);
+	
+});
+*/
+
+/* Route::get('/', 'home@index');  */
+/*
+Route::get('about', 'home@about');
+
+Route::controller('home');
+Route::controller('users');
+*/
+
+//Route::controller(array('home','users'));
+Route::controller(Controller::detect());
+
 
 /*
 |--------------------------------------------------------------------------

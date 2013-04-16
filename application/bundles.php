@@ -34,7 +34,8 @@
 */
 
 return array(
-
-	'docs' => array('handles' => 'docs'),
+	'bootstrapper' => array('auto' => true),
+	'laravelapikit' => array('handles' => 'app'),
+	'docs' => array('handles' => 'docs')
 
 );

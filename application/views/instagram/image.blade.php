@@ -2,10 +2,12 @@
 <br/>
 		@section('main')
 		<div role="main" class="main">
-			<div class="home">
-				<p>My home page</p>
+			<div class="images">
+			<p>the instagram feed will go here</p>
+			
 			</div>
 		</div>
 		@endsection
+	
 </body>
 </html>
