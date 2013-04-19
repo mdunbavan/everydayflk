@@ -146,3 +146,9 @@ function set_path($path, $value)
 {
 	$GLOBALS['laravel_paths'][$path] = $value;
 }
+
+// --------------------------------------------------------------
+// The path to the composer vendors directory.
+// --------------------------------------------------------------
+
+$paths['composer'] = 'vendor';

@@ -36,6 +36,7 @@
 return array(
 	'bootstrapper' => array('auto' => true),
 	'laravelapikit' => array('handles' => 'app'),
-	'docs' => array('handles' => 'docs')
+	'docs' => array('handles' => 'docs'),
+	'composer' => array('auto' => true)
 
 );
