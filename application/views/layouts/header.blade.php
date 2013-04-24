@@ -1,3 +1,6 @@
+<?php 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,7 +20,7 @@
                             <li><a href="/home/about">About</a></li>
                             <li><a href="/image">Instagram</a></li>
                             <li><a href="/image/feed">Feed</a></li>
-                            <li><a href="/">Location</a></li>
+                            <li><a href="/media">Media</a></li>
                             <li><a href="/users">Users</a></li>
                             @yield_section
                         </ul>

@@ -16,16 +16,16 @@ spl_autoload_register('app_autoloader');
 session_start();
 
 // set authentication details
-$config = array(
+$auth_config = array(
   'client_id'         => '37e5c3c1bd37453aa6f183a357fb413c',
   'client_secret'     => 'c133b37101f94603925325dacbda1bc1',
-  'redirect_uri'      => 'http://folk:8888'
+  'redirect_uri'      => 'http://folk:8888',
+  'scope'             => array( 'likes', 'comments', 'relationships' )
 );
 
-// perform authentication
 if (!isset( $_SESSION['instagram_access_token'] ) ) {
-  $auth = new Instagram\Auth($config);
-  if (isset($_GET['code'])) {
+$auth = new Instagram\Auth( $auth_config );
+if (isset($_GET['code'])) {
       $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] );
       header( 'Location: ' . REDIRECT_AFTER_AUTH );
       exit;
@@ -34,27 +34,7 @@ if (!isset( $_SESSION['instagram_access_token'] ) ) {
   }
   exit;
 }
-try {
-    if ( isset( $_POST['action'] ) ) {
-        switch( strtolower( $_POST['action'] ) ) {
-            case 'add_comment':
-                $current_user->addMediaComment( $media_id, $_POST['comment_text'] );
-                break;
-            case 'delete_comment':
-                $current_user->deleteMediaComment( $media_id, $_POST['comment_id'] );
-                break;
-            case 'like':
-                $current_user->addLike( $media_id );
-                break;
-            case 'unlike':
-                $current_user->deleteLike( $media_id );
-                break;
-        }
-    }
-}
-catch( \Instagram\Core\ApiException $e ) {
-    $error = $e->getMessage();
-}
+
 
     // initialize client
     try {
@@ -62,22 +42,21 @@ catch( \Instagram\Core\ApiException $e ) {
       
       $instagram->setAccessToken($_SESSION['instagram_access_token']);
       // get and display popular images
+      $current_user = $instagram->getCurrentUser();
       $tag = $instagram->getTag( 'folkdetails' );
       $media = $tag->getMedia(isset($_GET['max_tag_id'] ) ? array( 'max_tag_id' => $_GET['max_tag_id'] ) : null);
       $data = $media->getData();
       
-      $media = $instagram->getMedia($data);
-$comments = $media->getComments();
+      echo '<h3>'; echo $current_user; echo '</h3>';
+	 echo '<img src="'; echo $current_user->getProfilePicture(); echo '"'; echo '/>';
+	 $liked_media = $current_user->getLikedMedia();
 
-$tags_closure = function($m){
-    return sprintf( '<a href="?example=tag.php&tag=%s">%s</a>', $m[1], $m[0] );
-};
-
-$mentions_closure = function($m){
-    return sprintf( '<a href="?example=user.php&user=%s">%s</a>', $m[1], $m[0] );
-};
-      
-      if ($media->count() > 0) {
+  // Display all user likes
+  foreach ($liked_media as $entry) {
+  	echo '<img src="' . $entry->images->thumbnail->url . '" />';
+  
+  }
+      //if ($media->count() > 0) {
         echo '<ul>';
         foreach ($data as $item) {
           echo '<li style="display: inline-block; padding: 25px">
@@ -88,25 +67,36 @@ $mentions_closure = function($m){
             '</em> <br/>';
           echo 'Date: ' . date ('d M Y h:i:s', $item->created_time) . '<br/>';
           echo $item->comments->count . ' comment(s). ' . 
-            $item->likes->count . ' likes. </li>';
-            if( $data->getCaption() ):
-echo '<p id="caption"><em>'; echo \Instagram\Helper::parseTagsAndMentions( $media->getCaption(), $tags_closure, $mentions_closure ); echo '</em></p>';
-endif;
-echo '<form id="like" action="" method="post">';
-	if( $current_user->likes( $data ) ):
+            $item->likes->count . ' likes. ';
+          echo  
+            '<form id="like" action="" method="post">';
+	 if( $current_user->likes( $item ) ): 
 	echo '<input type="submit" name="action" value="Unlike">';
-	else:
+	 else:
 	echo '<input type="submit" name="action" value="Like">';
-	endif;
+	 endif; 
 echo '</form>';
+            echo '</li>';
         }
         echo '</ul>';
         echo $tag->getMediaCount();
-      }
+     // }
     } catch (Exception $e) {
       echo 'ERROR: ' . $e->getMessage() . print_r($e);
       exit;
     }
+    
+    if ( isset( $_POST['action'] ) ) {
+        switch( strtolower( $_POST['action'] ) ) {
+            case 'like':
+                $current_user->addLike( $item );
+                break;
+            case 'unlike':
+                $current_user->deleteLike( $item );
+                break;
+        }
+    }
+
     ?>
     <h4>Recent Media <?php if( $media->getNextMaxTagId() ): ?><a href="?example=tag.php&tag=<?php echo $tag ?>&max_tag_id=<?php echo $media->getNextMaxTagId() ?>" class="next_page">Next page</a></li><?php endif; ?></h4>
     			
