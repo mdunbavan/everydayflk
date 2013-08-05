@@ -26,7 +26,6 @@ if (!isset( $_SESSION['instagram_access_token'] ) ) {
 $auth = new Instagram\Auth( $auth_config );
 if (isset($_GET['code'])) {
       $_SESSION['instagram_access_token'] = $auth->getAccessToken( $_GET['code'] );
-      header( 'Location: ' . REDIRECT_AFTER_AUTH );
       exit;
   } else {
     $auth->authorize();
@@ -63,8 +62,7 @@ if (isset($_GET['code'])) {
           echo 'Date: ' . date ('d M Y h:i:s', $item->created_time) . '<br/>';
           echo $item->comments->count . ' comment(s). ' . 
             $item->likes->count . ' likes. ';
-          echo  
-            '<form id="like" action="" method="post">';
+          echo '<form id="like" action="" method="post">';
 	 if( $current_user->likes( $item ) ): 
 	echo '<input type="submit" name="action" value="Unlike">';
 	 else:

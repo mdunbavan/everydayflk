@@ -9,9 +9,5 @@ class Image_Controller extends Base_Controller {
 		return View::make('instagram.image');
 		
 	}
-	public function action_feed()
-	{
-		return View::make('instagram.feed');
-	}
 
 }

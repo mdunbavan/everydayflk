@@ -3,8 +3,6 @@
 		@section('main')
 		<div role="main" class="main">
 			<div class="images">
-			<p>the instagram feed will go here</p>
-<h1>Popular on Instagram</h1>  
     <?php
     // set up autoloader
 function app_autoloader($class) {
@@ -14,14 +12,6 @@ spl_autoload_register('app_autoloader');
 
 // start session
 session_start();
-
-// set authentication details
-$auth_config = array(
-  'client_id'         => '37e5c3c1bd37453aa6f183a357fb413c',
-  'client_secret'     => 'c133b37101f94603925325dacbda1bc1',
-  'redirect_uri'      => 'http://folk:8888',
-  'scope'             => array( 'likes', 'comments', 'relationships' )
-);
 
 if (!isset( $_SESSION['instagram_access_token'] ) ) {
 $auth = new Instagram\Auth( $auth_config );
@@ -35,70 +25,102 @@ if (isset($_GET['code'])) {
   exit;
 }
 
+// controller processing stuff - preparing and handling stuff from view.. 
 
-    // initialize client
-    try {
-      $instagram = new Instagram\Instagram;
-      
-      $instagram->setAccessToken($_SESSION['instagram_access_token']);
-      // get and display popular images
-      $current_user = $instagram->getCurrentUser();
-      $tag = $instagram->getTag( 'folkdetails' );
-      $media = $tag->getMedia(isset($_GET['max_tag_id'] ) ? array( 'max_tag_id' => $_GET['max_tag_id'] ) : null);
-      $data = $media->getData();
-      
-      echo '<h3>'; echo $current_user; echo '</h3>';
-	 echo '<img src="'; echo $current_user->getProfilePicture(); echo '"'; echo '/>';
-	 $liked_media = $current_user->getLikedMedia();
+// is there an error?
+$error = '';
 
-  // Display all user likes
-  foreach ($liked_media as $entry) {
-  	echo '<img src="' . $entry->images->thumbnail->url . '" />';
-  
-  }
-      //if ($media->count() > 0) {
-        echo '<ul>';
-        foreach ($data as $item) {
-          echo '<li style="display: inline-block; padding: 25px">
-            <a href="' . $item->link . '"><img src="' . 
-            $item->images->thumbnail->url . 
-            '" /></a> <br/>';
-          echo 'By: <em>' . $item->user->username . 
-            '</em> <br/>';
-          echo 'Date: ' . date ('d M Y h:i:s', $item->created_time) . '<br/>';
-          echo $item->comments->count . ' comment(s). ' . 
-            $item->likes->count . ' likes. ';
-          echo  
-            '<form id="like" action="" method="post">';
-	 if( $current_user->likes( $item ) ): 
-	echo '<input type="submit" name="action" value="Unlike">';
-	 else:
-	echo '<input type="submit" name="action" value="Like">';
-	 endif; 
-echo '</form>';
-            echo '</li>';
-        }
-        echo '</ul>';
-        echo $tag->getMediaCount();
-     // }
-    } catch (Exception $e) {
-      echo 'ERROR: ' . $e->getMessage() . print_r($e);
-      exit;
-    }
+// debug form submission
+
+// if the form has been submitted...
+if ( ! empty( $_POST )) { 
     
+    print_r($_POST);
+    
+}
+
+try {
+
+    $instagram = new Instagram\Instagram;
+
+    $instagram->setAccessToken($_SESSION['instagram_access_token']);
+    $token = $_SESSION['instagram_access_token'];
+    //$clientID = $_SESSION['client_id'];
+    
+    $current_user = $instagram->getCurrentUser();
+    $tag = $instagram->getTag('folkclothing');
+    $media = $tag->getMedia(isset($_GET['max_tag_id']) ? array( 'max_tag_id' => $_GET['max_tag_id'] ) : null);
+    
+
+    $liked_media = $current_user->getLikedMedia();
+    /* echo 'https://api.instagram.com/v1/media/'. $item->getId() .'/likes?access_token='.$token.''; */
+
     if ( isset( $_POST['action'] ) ) {
-        switch( strtolower( $_POST['action'] ) ) {
+    
+    echo '<br/>FORM IS SUBMITTED, INSPECT WHAT WAS SENT';        
+        print_r($_POST);
+        
+        $id = $_POST['id'];
+    
+                switch( strtolower( $_POST['action'] ) ) {
             case 'like':
-                $current_user->addLike( $item );
+                $current_user->addLike( $id );
                 break;
             case 'unlike':
-                $current_user->deleteLike( $item );
+                $current_user->deleteLike( $id );
                 break;
+                }
+       }
+
+} catch ( Exception $e ) {
+    // yes there is an error
+    $error = $e->getMessage();
+
+}
+
+// view rendering stuff 
+
+// display the error
+if ( $error  != '' ) 
+{
+    echo "<h2>Error: ".$error."</h2>";
+} 
+
+
+echo '<section>';
+
+foreach ( $media as $item ) {
+
+	echo '<article class="instagram-image">';
+    // define the form and set the action to POST to send the data to this script
+	echo '<form class="forms" action="'; echo URL::current(); echo '" method="post">';
+
+        $id = $item->getId();
+
+        echo '<a class="fancybox" href="' . $item->link . '"><img src="' . $item->images->standard_resolution->url . '" /></a>';
+        if ( $current_user->likes($item) ){
+            echo '<button class="ajax instabtn unlike icon-heart" type="submit" name="action" value="Unlike"></button>';
+        } else {
+            echo '<button class="ajax instabtn like icon-heart" type="submit" name="action" value="Like"></button>';
         }
-    }
+        echo '<input type="hidden" name="id" value="'; echo $id; echo '">';
+		
+		echo '<p>'; echo $item->likes->count; echo '</p>';
+        //echo '<p>'.$item->getId().'</p>';
+        //echo '<p>By: <em>' . $item->user->username . '</em> </p>';
+        //echo '<p>Date: ' . date('d M Y h:i:s', $item->created_time) . '</p>';
+        //echo '<p>$item->comments->count . ' comment(s). ' . $item->likes->count . ' likes. ';
+        
+	echo '</form>';
+	echo '</article>';
+}
+echo '</section>';
+//echo $tag->getMediaCount();
+//print_r($media_id);</br>
+    
 
     ?>
-    <h4>Recent Media <?php if( $media->getNextMaxTagId() ): ?><a href="?example=tag.php&tag=<?php echo $tag ?>&max_tag_id=<?php echo $media->getNextMaxTagId() ?>" class="next_page">Next page</a></li><?php endif; ?></h4>
+    <h4>Recent Media <?php if( $media->getNextMaxTagId() ): ?><a href="?tag=<?php echo $tag ?>&max_tag_id=<?php echo $media->getNextMaxTagId() ?>" class="next_page">Next page</a></li><?php endif; ?></h4>
     			
 			</div>
 		</div>

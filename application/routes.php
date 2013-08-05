@@ -101,6 +101,33 @@ Event::listen('500', function($exception)
 	return Response::error('500');
 });
 
+
+Route::get('votes', function()
+{
+	// Lets say you have "vote" model, in that case you could be able to do something like 
+	// $votecount = Vote::all()->count(); and output that instead of the fixed number I have here
+	$data = array(
+		"html" => '<p class="votecount lead">13 Votes</p>'
+	);
+
+	return Response::json($data);
+});
+
+Route::post('vote', function()
+{
+	// Lets say you have "vote" model, in that case you could be able to do something like
+	// $vote = new Vote()
+	// $vote->user_id = Auth::user()->id; 
+	// $vote->save();
+
+	$data = array(
+		"html" => '<a href="#" class="btn disabled"><i class="icon icon-thumbs-up"></i> Voted!</a>'
+	);
+
+	return Response::json($data);
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Route Filters
