@@ -87,23 +87,25 @@ if ( $error  != '' )
 } 
 
 
-echo '<section>';
+echo '<section id="images">';
 
 foreach ( $media as $item ) {
 
 	echo '<article class="instagram-image">';
     // define the form and set the action to POST to send the data to this script
-	echo '<form class="forms" action="'; echo URL::current(); echo '" method="post">';
+	echo '<form id="'. $token .'" class="forms" action="'; echo URL::current(); echo '" method="post">';
 
         $id = $item->getId();
 
-        echo '<a class="fancybox" href="' . $item->link . '"><img src="' . $item->images->standard_resolution->url . '" /></a>';
+        echo '<a title="' . $item->getCaption() .'" class="fancybox" href="' . $item->link . '"><img alt="' . $item->getCaption() .'" src="' . $item->images->standard_resolution->url . '" /></a>';
+        echo '<div class="formSubmit-feedback"></div>';
+        //echo '<img src="/public/img/377.gif" alt="loader"/>';
         if ( $current_user->likes($item) ){
-            echo '<button class="ajax instabtn unlike icon-heart" type="submit" name="action" value="Unlike"></button>';
+            echo '<button onClick="post_form("'.$id.'","unlike");" class="ajax instabtn unlike icon-heart" type="submit" name="action" value="Unlike"></button>';
         } else {
-            echo '<button class="ajax instabtn like icon-heart" type="submit" name="action" value="Like"></button>';
+            echo '<button onClick="post_form("'.$id.'","like");" class="ajax instabtn like icon-heart" type="submit" name="action" value="Like"></button>';
         }
-        echo '<input type="hidden" name="id" value="'; echo $id; echo '">';
+        echo '<input class="id" type="hidden" name="id" value="'; echo $id; echo '">';
 		
 		echo '<p>'; echo $item->likes->count; echo '</p>';
         //echo '<p>'.$item->getId().'</p>';
@@ -118,6 +120,7 @@ echo '</section>';
 //echo $tag->getMediaCount();
 //print_r($media_id);</br>
     
+	echo "<button id=\"more\" data-url=\"{}\" data-maxid=\"{$media->getNextMaxTagId()}\" data-tag=\"{$tag}\">Load more ...</button>";
 
     ?>
     <h4>Recent Media <?php if( $media->getNextMaxTagId() ): ?><a href="?tag=<?php echo $tag ?>&max_tag_id=<?php echo $media->getNextMaxTagId() ?>" class="next_page">Next page</a></li><?php endif; ?></h4>

@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/galen/PHP-Instagram-API.git",
-                "reference": "5fbd3949e143cfc18640a85c7e6db642d8ec726b"
+                "reference": "fc4d8cf4f05c51e71ddbc7d7b80f639c68b39405"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/galen/PHP-Instagram-API/zipball/5fbd3949e143cfc18640a85c7e6db642d8ec726b",
-                "reference": "5fbd3949e143cfc18640a85c7e6db642d8ec726b",
+                "url": "https://api.github.com/repos/galen/PHP-Instagram-API/zipball/fc4d8cf4f05c51e71ddbc7d7b80f639c68b39405",
+                "reference": "fc4d8cf4f05c51e71ddbc7d7b80f639c68b39405",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
             "keywords": [
                 "instagram"
             ],
-            "time": "2013-03-19 00:38:05"
+            "time": "2013-08-02 18:03:14"
         }
     ],
     "packages-dev": [

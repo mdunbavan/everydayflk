@@ -38,5 +38,4 @@ return array(
 	'laravelapikit' => array('handles' => 'app'),
 	'docs' => array('handles' => 'docs'),
 	'composer' => array('auto' => true)
-
 );

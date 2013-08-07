@@ -3,10 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>Everyday Folk</title>
-        {{ Asset::container('bootstrapper')->styles(); }}
-        <!--<link href="<?php echo URL::to_asset('bundles/bootstrapper/css/bootstrap.css'); ?>" media="all" type="text/css" rel="stylesheet">-->
+        <!-- {{ Asset::container('bootstrapper')->styles(); }} -->
+        <link href="<?php echo URL::to_asset('bundles/bootstrapper/css/bootstrap.css'); ?>" media="all" type="text/css" rel="stylesheet">
+        <link href="<?php echo URL::to_asset('bundles/bootstrapper/css/bootstrap-responsive.css'); ?>" media="all" type="text/css" rel="stylesheet">
+         <link href="<?php echo URL::to_asset('laravel/css/style.css'); ?>" media="all" type="text/css" rel="stylesheet">
         <link href="<?php echo URL::to_asset('public/icomoon13696/style.css'); ?>" media="all" type="text/css" rel="stylesheet">
-        <link href="<?php echo URL::to_asset('laravel/css/style.css'); ?>" media="all" type="text/css" rel="stylesheet">
+        
+        // Lets load jquery in the head pf the document
+        {{ HTML::script(URL::$base.'/public/js/jquery.1.9.min.js') }}
+        
+        <script>
+          var base = '<?php echo URL::current(); ?>';      
+        </script>
+        
     </head>
     <body>
 	<header id="top">
@@ -56,6 +65,7 @@
         </div> <!-- /container -->
         {{ Asset::container('bootstrapper')->scripts(); }}
         {{ HTML::script(URL::$base.'/public/js/bootstrap-ajax.js') }}
+        {{ HTML::script(URL::$base.'/public/js/formsubmit.js') }}
         {{ HTML::script(URL::$base.'/public/js/functions.js') }}
     </body>
 </html>

@@ -115,12 +115,16 @@ body
 	top: 0px;
 	position: fixed;
 	height: 185px;
+	z-index: 100;
 }
-
+.container{
+	width: 100%;
+}
 #content
 {
 	padding:0 1.5em 0 1.5em;
 	background: #fbfafa;
+	margin-top: 171px;
 }
 
 #profile{
@@ -152,9 +156,15 @@ ul#tags li a{
 	margin: -59px 20px 0 0;
 	float: right;
 }
+.loading{
+	position: absolute;
+	width: inherit;
+	height: 445px;
+	background: url(/img/377.gif) no-repeat center center;
+}
 .instagram-image{
 	display: inline-block;
-	width: 23.9%;
+	width: 390px;
 	border: solid 10px white;
 	vertical-align: top;
 }

@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Instagram' => $vendorDir . '/php-instagram-api/php-instagram-api',
-    'Cli' => $vendorDir . '/kloy/cli/src',
+    'Instagram' => array($vendorDir . '/php-instagram-api/php-instagram-api'),
+    'Cli' => array($vendorDir . '/kloy/cli/src'),
 );

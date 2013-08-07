@@ -30,3 +30,23 @@ echo '<form id="like" action="" method="post">';
 	echo '<input type="submit" name="action" value="Like">';
 	endif;
 echo '</form>';
+
+<?php 
+
+/*   $collection = array($data->images->standard_resolution->url,$data->link,$data->getId(),$data->likes->count); */
+    /*
+$images[] = $data->images->standard_resolution->url;
+    $images[] = $data->link;
+    $images[] = $data->getId();
+    $images[] = $data->likes->count;
+*/
+	/*
+$data_url[] = $data->images->standard_resolution->url;
+	$data_link[] = $data->link;
+	$data_id[] = $data->getId();
+	$data_likes[] = $data->likes->count;
+	$images[] = array($data_url);
+*/
+/*     $images[] = array($data_url[] = $data->images->standard_resolution->url,$data_link[] = $data->link, $data_id[] = $data->getId(), $data_likes[] = $data->likes->count); */
+
+?>
