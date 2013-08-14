@@ -1,5 +1,8 @@
 @layout('layouts/header')
 <br/>
+<div class="the-return">
+  [HTML is replaced when successful.]
+</div>
 		@section('main')
 		<div role="main" class="main">
 			<div class="images">
@@ -99,11 +102,12 @@ foreach ( $media as $item ) {
 
         echo '<a title="' . $item->getCaption() .'" class="fancybox" href="' . $item->link . '"><img alt="' . $item->getCaption() .'" src="' . $item->images->standard_resolution->url . '" /></a>';
         echo '<div class="formSubmit-feedback"></div>';
+        //echo '<p class="button-like">like</p>';
         //echo '<img src="/public/img/377.gif" alt="loader"/>';
         if ( $current_user->likes($item) ){
-            echo '<button onClick="post_form("'.$id.'","unlike");" class="ajax instabtn unlike icon-heart" type="submit" name="action" value="Unlike"></button>';
+            echo '<button class="ajax instabtn button-unlike unlike icon-heart" type="submit" name="action" value="Unlike"></button>';
         } else {
-            echo '<button onClick="post_form("'.$id.'","like");" class="ajax instabtn like icon-heart" type="submit" name="action" value="Like"></button>';
+            echo '<button class="ajax instabtn button-like like icon-heart" type="submit" name="action" value="Like"></button>';
         }
         echo '<input class="id" type="hidden" name="id" value="'; echo $id; echo '">';
 		

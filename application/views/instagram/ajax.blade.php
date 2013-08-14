@@ -43,6 +43,7 @@ if (isset($_GET['code'])) {
 */
  
   // Collect everything for json output
+
   $images = array();
   $data_link = array();
   $data_id = array();
@@ -53,7 +54,9 @@ if (isset($_GET['code'])) {
     	"data_link"=>$data->link,
     	"data_text"=>$data->getCaption(),
     	"data_id"=>$data->getId(),
-    	"data_likes"=>$data->likes->count
+    	"data_likes"=>$data->likes->count,
+    	"data_like"=>$current_user->likes($data),
+    	"data_token"=>$token
     
     );
   }

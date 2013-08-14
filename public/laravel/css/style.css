@@ -156,15 +156,90 @@ ul#tags li a{
 	margin: -59px 20px 0 0;
 	float: right;
 }
+/*
 .loading{
-	position: absolute;
-	width: inherit;
-	height: 445px;
 	background: url(/img/377.gif) no-repeat center center;
+	background-size: 75%;
+}
+*/
+
+/*
+.loading {
+   -webkit-animation: rotation .6s infinite linear;
+   -moz-animation: rotation .6s infinite linear;
+   -o-animation: rotation .6s infinite linear;
+   animation: rotation .6s infinite linear;
+   border:6px solid white;
+   border-radius:100%;
+   content: "";
+}
+.loading:before {
+	content: "";
+   border-top:6px solid white;
+   border-left:6px solid transparent;
+   border-bottom:6px solid transparent;
+   border-right:6px solid transparent;
+   border-radius:100%;
+}
+*/
+
+.formSubmit-feedback{
+	height: 15px;
+width: 15px;
+position: relative;
+float: right;
+margin: -52px 27px 0 0;
+z-index: 999;
+display: none;
+-webkit-animation: rotation .6s infinite linear;
+-moz-animation: rotation .6s infinite linear;
+-o-animation: rotation .6s infinite linear;
+animation: rotation .6s infinite linear;
+border: 6px solid white;
+border-radius: 100%;
+font-size: 19px;
+speak: none;
+font-style: normal;
+font-weight: normal;
+font-variant: normal;
+text-transform: none;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+background-color: #e56c69;
+border-top:6px solid white;
+   border-left:6px solid transparent;
+   border-bottom:6px solid transparent;
+   border-right:6px solid transparent;
+}
+/*
+.formSubmit-feedback:before {
+	content: "";
+   border-top:6px solid #e56c69;
+   border-left:6px solid transparent;
+   border-bottom:6px solid transparent;
+   border-right:6px solid transparent;
+   border-radius:100%;
+}
+*/
+@-webkit-keyframes rotation {
+   from {-webkit-transform: rotate(0deg);}
+   to {-webkit-transform: rotate(359deg);}
+}
+@-moz-keyframes rotation {
+   from {-moz-transform: rotate(0deg);}
+   to {-moz-transform: rotate(359deg);}
+}
+@-o-keyframes rotation {
+   from {-o-transform: rotate(0deg);}
+   to {-o-transform: rotate(359deg);}
+}
+@keyframes rotation {
+   from {transform: rotate(0deg);}
+   to {transform: rotate(359deg);}
 }
 .instagram-image{
 	display: inline-block;
-	width: 390px;
+	width: 349px;
 	border: solid 10px white;
 	vertical-align: top;
 }
